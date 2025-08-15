@@ -9,7 +9,7 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import type { Document } from "@langchain/core/documents";
 import { logger, type Logger } from "../utils/logger";
 import type { IndexerConfig } from "../types";
-import { vectorStore } from "../lib/llm";
+import { getVectorStore } from "../lib/llm";
 
 export class Indexer {
   private vectorStore?: QdrantVectorStore;
@@ -155,6 +155,6 @@ export class Indexer {
 }
 
 if (import.meta.main) {
-  const indexer = new Indexer(vectorStore);
+  const indexer = new Indexer(getVectorStore("test"));
   await indexer.indexFolder("./data");
 }

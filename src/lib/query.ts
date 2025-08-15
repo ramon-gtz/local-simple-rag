@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { ChatOllama } from "@langchain/ollama";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
-import { vectorStore } from "./llm";
+import { getVectorStore } from "./llm";
 import { logger } from "../utils/logger";
 
 const PROMPT_TEMPLATE = `
@@ -19,8 +19,9 @@ interface QueryResult {
   sources: (string | null)[];
 }
 
-export async function queryDatabase(queryText: string): Promise<QueryResult | null> {
+export async function queryDatabase(queryText: string, collectionName: string): Promise<QueryResult | null> {
   // Search the DB.
+  const vectorStore = getVectorStore(collectionName);
   const results = await vectorStore.similaritySearchWithScore(queryText, 5);
   logger.debug(results);
 
@@ -69,7 +70,7 @@ export async function main(): Promise<void> {
     process.exit(1);
   }
 
-  await queryDatabase(queryText);
+  await queryDatabase(queryText, process.env.VECTOR_STORE_COLLECTION || "default");
 }
 
 // Run main if this file is executed directly

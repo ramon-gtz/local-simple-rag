@@ -6,7 +6,9 @@ export const embeddings = new OllamaEmbeddings({
   model: process.env.EMBEDDINGS_MODEL,
 });
 
-export const vectorStore = new QdrantVectorStore(embeddings, {
-  url: process.env.VECTOR_STORE_URL,
-  collectionName: process.env.VECTOR_STORE_COLLECTION,
-});
+export const getVectorStore = (collectionName: string) => {
+    return new QdrantVectorStore(embeddings, {
+      url: process.env.VECTOR_STORE_URL,
+      collectionName,
+    });
+  };
