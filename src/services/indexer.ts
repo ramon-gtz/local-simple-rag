@@ -19,7 +19,7 @@ export class Indexer {
   constructor(vectorStore?: QdrantVectorStore, config?: IndexerConfig) {
     this.vectorStore = vectorStore;
     this.config = {
-      chunkSize: config?.chunkSize || 300,
+      chunkSize: config?.chunkSize || 500,
       chunkOverlap: config?.chunkOverlap || 100,
       enableLogging: config?.enableLogging || true,
       batchSize: config?.batchSize || 10,
